@@ -18,6 +18,11 @@ class UsersRepository extends Repository<User> {
       },
     });
   }
+
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const user = this.findBy({ email }).then((res) => res[0]) || undefined;
+    return user;
+  }
 }
 
 export const usersRepository = new UsersRepository(
