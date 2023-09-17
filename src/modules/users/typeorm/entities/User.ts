@@ -35,7 +35,10 @@ class User {
   })
   role: UserRole;
 
-  @Column('bool')
+  @Column({
+    type: 'boolean',
+    default: true,
+  })
   active: boolean;
 
   @CreateDateColumn()
