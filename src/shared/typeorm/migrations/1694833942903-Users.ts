@@ -38,6 +38,16 @@ export class Users1694833942903 implements MigrationInterface {
             name: 'password',
             type: 'varchar',
           },
+          {
+            name: 'created_at',
+            type: 'timestamp with time zone',
+            default: 'now()',
+          },
+          {
+            name: 'update_at',
+            type: 'timestamp with time zone',
+            default: 'now()',
+          },
         ],
       })
     );
