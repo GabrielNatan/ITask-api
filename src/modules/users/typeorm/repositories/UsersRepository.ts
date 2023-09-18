@@ -19,13 +19,13 @@ class UsersRepository extends Repository<User> {
     });
   }
 
-  public async findByEmail(email: string): Promise<User | undefined> {
-    const user = this.findBy({ email }).then((res) => res[0]) || undefined;
+  public async findByEmail(email: string): Promise<User | null> {
+    const user = this.findOne({ where: { email } });
     return user;
   }
 
-  public async findById(id: number): Promise<User | undefined> {
-    const user = this.findBy({ id }).then((res) => res[0]) || undefined;
+  public async findById(id: number): Promise<User | null> {
+    const user = await this.findOne({ where: { id } });
     return user;
   }
 }
