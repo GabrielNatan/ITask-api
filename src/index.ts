@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import 'reflect-metadata';
+import 'express-async-errors';
 import AppError from '@shared/errors/AppError';
 import { AppDataSource } from '@shared/typeorm';
 import { usersRoutes } from '@modules/users/routes/users.routes';
@@ -12,7 +13,7 @@ AppDataSource.initialize().then(() => {
   app.use('/users', usersRoutes);
 
   app.use(
-    (
+    async (
       error: Error,
       request: Request,
       response: Response,
