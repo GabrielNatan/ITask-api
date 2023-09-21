@@ -4,6 +4,7 @@ import 'express-async-errors';
 import AppError from '@shared/errors/AppError';
 import { AppDataSource } from '@shared/typeorm';
 import { usersRoutes } from '@modules/users/routes/users.routes';
+import { customerRoutes } from '@modules/customer/routes/customer.routes';
 
 AppDataSource.initialize().then(() => {
   const app = express();
@@ -11,6 +12,7 @@ AppDataSource.initialize().then(() => {
   app.use(express.json());
 
   app.use('/users', usersRoutes);
+  app.use('/customers', customerRoutes);
 
   app.use(
     async (
