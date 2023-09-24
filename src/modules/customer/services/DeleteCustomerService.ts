@@ -13,7 +13,7 @@ class DeleteCustomerService {
       throw new AppError('Customer not found', 404);
     }
 
-    await customerRepository.delete(id);
+    await customerRepository.delete(Number(id));
 
     return;
   }

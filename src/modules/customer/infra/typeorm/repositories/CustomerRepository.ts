@@ -11,6 +11,27 @@ class CustomerRepository implements ICustomerRepository {
     this.ormRepository = AppDataSource.getRepository(Customer);
     console.log('ORM ', this.ormRepository);
   }
+  public async find(): Promise<ICustomer[] | undefined> {
+    return this.ormRepository.find();
+  }
+
+  public async update(
+    id: number,
+    data: object
+  ): Promise<ICustomer | undefined> {
+    this.ormRepository.update(id, data);
+    return;
+  }
+
+  public async delete(id: number): Promise<undefined> {
+    this.ormRepository.delete(id);
+    return;
+  }
+
+  public async save(data: ICustomer): Promise<undefined> {
+    this.ormRepository.save(data);
+    return;
+  }
 
   public async findById(id: number): Promise<ICustomer | null> {
     return this.ormRepository.findOne({

@@ -3,7 +3,7 @@ import { customerRepository } from '../infra/typeorm/repositories/CustomerReposi
 
 class CustomerListService {
   public async execute(): Promise<Customer[]> {
-    const customers = customerRepository.find();
+    const customers = (await customerRepository.find()) || [];
 
     return customers;
   }

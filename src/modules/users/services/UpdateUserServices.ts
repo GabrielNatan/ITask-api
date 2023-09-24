@@ -1,6 +1,5 @@
 import AppError from '@shared/errors/AppError';
 import { usersRepository } from '../infra/typeorm/repositories/UsersRepository';
-import { UpdateResult } from 'typeorm';
 
 interface IResponse {
   id: number;
@@ -17,21 +16,21 @@ class UpdateUserServices {
     last_name,
     email,
     password,
-  }: IResponse): Promise<UpdateResult> {
+  }: IResponse): Promise<undefined> {
     const user = await usersRepository.findById(id);
 
     if (!user) {
       throw new AppError('User not found.', 404);
     }
 
-    const userUpdate = await usersRepository.update(id, {
+    await usersRepository.update(id, {
       last_name,
       first_name,
       email,
       password,
     });
 
-    return userUpdate;
+    return;
   }
 }
 

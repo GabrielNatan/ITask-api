@@ -10,7 +10,7 @@ class DeleteUserService {
       throw new AppError('User not found.', 404);
     }
 
-    await usersRepository.delete({ id });
+    await usersRepository.delete(id);
 
     return user;
   }
