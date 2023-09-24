@@ -1,18 +1,17 @@
-import { EntityManager, EntityTarget, QueryRunner, Repository } from 'typeorm';
 import User from '../entities/User';
 import { AppDataSource } from '@shared/infra/typeorm';
+import { IUserRepository } from '@modules/users/domain/repositories/IUserRepository';
+import { Repository } from 'typeorm';
+import { IUserCreate } from '@modules/users/domain/models/IUserCreate';
 
-class UsersRepository extends Repository<User> {
-  constructor(
-    user: EntityTarget<User>,
-    manager: EntityManager,
-    queryRunner: QueryRunner | undefined
-  ) {
-    super(user, manager, queryRunner);
+class UsersRepository implements IUserRepository {
+  private ormRepository: Repository<User>;
+  constructor() {
+    this.ormRepository = AppDataSource.getRepository(User);
   }
 
-  public async findByName(name: string): Promise<User[] | undefined> {
-    return this.find({
+  public async findByName(name: string): Promise<User[] | null> {
+    return this.ormRepository.find({
       where: {
         first_name: name,
       },
@@ -20,20 +19,36 @@ class UsersRepository extends Repository<User> {
   }
 
   public async findByEmail(email: string): Promise<User | null> {
-    const user = this.findOne({ where: { email } });
+    const user = this.ormRepository.findOne({ where: { email } });
     return user;
   }
 
   public async findById(id: number): Promise<User | null> {
-    const user = await this.findOne({ where: { id } });
+    const user = await this.ormRepository.findOne({ where: { id } });
+    return user;
+  }
+
+  public async create({
+    first_name,
+    last_name,
+    role,
+    email,
+    password,
+  }: IUserCreate): Promise<User> {
+    const user = this.ormRepository.create({
+      email,
+      first_name,
+      last_name,
+      password,
+      role,
+    });
+
+    await this.ormRepository.save(user);
+
     return user;
   }
 }
 
-export const usersRepository = new UsersRepository(
-  User,
-  AppDataSource.createEntityManager(),
-  AppDataSource.manager.queryRunner
-);
+export const usersRepository = new UsersRepository();
 
 export default UsersRepository;
