@@ -29,8 +29,6 @@ class CreateCustomerService {
       password,
     });
 
-    await customerRepository.save(customer);
-
     return customer;
   }
 }
