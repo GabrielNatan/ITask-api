@@ -1,3 +1,5 @@
+import { IUser } from '@modules/users/domain/models/IUser';
+import { IUserRole } from '@modules/users/domain/models/IUserRole';
 import {
   Column,
   CreateDateColumn,
@@ -6,13 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export enum UserRole {
-  ADMIN = 'admin',
-  EMPLOYED = 'employed',
-}
-
 @Entity('users')
-class User {
+class User implements IUser {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -30,10 +27,10 @@ class User {
 
   @Column({
     type: 'enum',
-    enum: UserRole,
-    default: UserRole.EMPLOYED,
+    enum: IUserRole,
+    default: IUserRole.EMPLOYED,
   })
-  role: UserRole;
+  role: IUserRole;
 
   @Column({
     type: 'boolean',

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import CreateUserService from '../services/CreateUserServices';
-import UpdateUserServices from '../services/UpdateUserServices';
-import ShowUserService from '../services/ShowUserService';
-import ListUserService from '../services/ListUserService';
-import DeleteUserService from '../services/DeleteUserService';
+import UpdateUserServices from '@modules/users/services/UpdateUserServices';
+import ShowUserService from '@modules/users/services/ShowUserService';
+import ListUserService from '@modules/users/services/ListUserService';
+import DeleteUserService from '@modules/users/services/DeleteUserService';
+import CreateUserService from '@modules/users/services/CreateUserServices';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {

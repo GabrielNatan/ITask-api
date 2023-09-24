@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
-import User from '../typeorm/entities/User';
-import { usersRepository } from '../typeorm/repositories/UsersRepository';
+import User from '../infra/typeorm/entities/User';
+import { usersRepository } from '../infra/typeorm/repositories/UsersRepository';
 
 interface IResponse {
   first_name: string;

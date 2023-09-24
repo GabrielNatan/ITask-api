@@ -1,5 +1,5 @@
 import AppError from '@shared/errors/AppError';
-import { usersRepository } from '../typeorm/repositories/UsersRepository';
+import { usersRepository } from '../infra/typeorm/repositories/UsersRepository';
 import { UpdateResult } from 'typeorm';
 
 interface IResponse {
