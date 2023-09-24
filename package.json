@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node start",
-    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts ",
+    "dev": "ts-node-dev -r tsconfig-paths/register ./src/shared/infra/http/server.ts ",
     "prettier": "prettier --write ./src/**/*.ts",
     "eslint": "eslint ./src/*.ts --fix",
     "postinstall": "husky install",

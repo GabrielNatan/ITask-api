@@ -1,6 +1,6 @@
 import { EntityManager, EntityTarget, QueryRunner, Repository } from 'typeorm';
 import Customer from '../entities/Customer';
-import { AppDataSource } from '@shared/typeorm';
+import { AppDataSource } from '@shared/infra/typeorm';
 
 class CustomerRepository extends Repository<Customer> {
   constructor(

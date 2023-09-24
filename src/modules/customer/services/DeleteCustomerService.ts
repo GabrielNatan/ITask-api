@@ -1,5 +1,5 @@
 import AppError from '@shared/errors/AppError';
-import { customerRepository } from '../typeorm/repositories/CustomerRepository';
+import { customerRepository } from '../infra/typeorm/repositories/CustomerRepository';
 
 interface IResponse {
   id: string;

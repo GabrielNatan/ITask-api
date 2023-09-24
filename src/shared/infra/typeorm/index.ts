@@ -9,8 +9,8 @@ export const AppDataSource = new DataSource({
   database: 'test',
   synchronize: true,
   logging: true,
-  entities: ['src/modules/*/typeorm/entities/*'],
+  entities: ['src/modules/*/infra/typeorm/entities/*'],
   subscribers: [],
-  migrations: ['src/shared/typeorm/migrations/*.ts'],
+  migrations: ['src/shared/typeorm/infra/migrations/*.ts'],
   migrationsTableName: 'migrations_typeorm',
 });
