@@ -6,4 +6,7 @@ export interface ICustomerRepository {
   findByName(first_name: string): Promise<ICustomer | null>;
   findByEmail(email: string): Promise<ICustomer | null>;
   create(data: ICreateCustomer): Promise<ICustomer>;
+  find(): Promise<ICustomer[] | undefined>;
+  delete(id: number): Promise<undefined>;
+  save(data: ICustomer): Promise<undefined>;
 }

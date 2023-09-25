@@ -9,8 +9,8 @@ class CustomerRepository implements ICustomerRepository {
   private ormRepository: Repository<Customer>;
   constructor() {
     this.ormRepository = AppDataSource.getRepository(Customer);
-    console.log('ORM ', this.ormRepository);
   }
+
   public async find(): Promise<ICustomer[] | undefined> {
     return this.ormRepository.find();
   }

@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import Customer from '../infra/typeorm/entities/Customer';
-import { customerRepository } from '../infra/typeorm/repositories/CustomerRepository';
+import { ICustomer } from '../domain/models/ICustomer';
+import { inject, injectable } from 'tsyringe';
+import { ICustomerRepository } from '../domain/repositories/ICustomerRepository';
 
 interface IResponse {
   id: string;
@@ -10,15 +11,21 @@ interface IResponse {
   password: string;
 }
 
+@injectable()
 class UpdateCustomerService {
+  constructor(
+    @inject('CustomerRepository')
+    public customerRepository: ICustomerRepository
+  ) {}
+
   public async execute({
     id,
     email,
     first_name,
     last_name,
     password,
-  }: IResponse): Promise<Customer> {
-    const customerExists = await customerRepository.findById(Number(id));
+  }: IResponse): Promise<ICustomer> {
+    const customerExists = await this.customerRepository.findById(Number(id));
 
     if (!customerExists) {
       throw new AppError('Customer not found', 404);
@@ -29,7 +36,7 @@ class UpdateCustomerService {
     customerExists.first_name = first_name;
     customerExists.last_name = last_name;
 
-    await customerRepository.save(customerExists);
+    await this.customerRepository.save(customerExists);
 
     return customerExists;
   }

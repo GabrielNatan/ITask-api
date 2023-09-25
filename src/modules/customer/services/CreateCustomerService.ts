@@ -1,28 +1,29 @@
 import AppError from '@shared/errors/AppError';
-import Customer from '../infra/typeorm/entities/Customer';
-import { customerRepository } from '../infra/typeorm/repositories/CustomerRepository';
+import { ICreateCustomer } from '../domain/models/ICreateCustomer';
+import { ICustomer } from '../domain/models/ICustomer';
+import { ICustomerRepository } from '../domain/repositories/ICustomerRepository';
+import { inject, injectable } from 'tsyringe';
 
-interface IResponse {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-}
-
+@injectable()
 class CreateCustomerService {
+  constructor(
+    @inject('CustomerRepository')
+    private customerRepository: ICustomerRepository
+  ) {}
+
   public async execute({
     email,
     first_name,
     last_name,
     password,
-  }: IResponse): Promise<Customer> {
-    const customerExists = await customerRepository.findByEmail(email);
+  }: ICreateCustomer): Promise<ICustomer> {
+    const customerExists = await this.customerRepository.findByEmail(email);
 
     if (customerExists) {
       throw new AppError('Customer exists', 400);
     }
 
-    const customer = customerRepository.create({
+    const customer = await this.customerRepository.create({
       first_name,
       last_name,
       email,
