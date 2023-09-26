@@ -1,6 +1,7 @@
 import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
-import { usersRepository } from '../infra/typeorm/repositories/UsersRepository';
+import { inject, injectable } from 'tsyringe';
+import { IUserRepository } from '../domain/repositories/IUserRepository';
 
 interface IResponse {
   first_name: string;
@@ -9,20 +10,26 @@ interface IResponse {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUserRepository
+  ) {}
+
   public async execute({
     first_name,
     last_name,
     email,
     password,
   }: IResponse): Promise<User> {
-    const emailExists = await usersRepository.findByEmail(email);
+    const emailExists = await this.usersRepository.findByEmail(email);
 
     if (emailExists) {
       throw new AppError('Email exists', 400);
     }
 
-    const user = usersRepository.create({
+    const user = this.usersRepository.create({
       first_name,
       last_name,
       email,

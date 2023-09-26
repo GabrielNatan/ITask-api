@@ -4,17 +4,18 @@ import ShowUserService from '@modules/users/services/ShowUserService';
 import ListUserService from '@modules/users/services/ListUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import CreateUserService from '@modules/users/services/CreateUserServices';
+import { container } from 'tsyringe';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listUserService = new ListUserService();
+    const listUserService = container.resolve(ListUserService);
     const users = await listUserService.execute();
     return response.json(users);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const showUserService = new ShowUserService();
+    const showUserService = container.resolve(ShowUserService);
 
     const user = await showUserService.execute({ id: Number(id) });
 
@@ -23,7 +24,7 @@ class UsersController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { first_name, last_name, email, password } = request.body;
-    const createUserService = new CreateUserService();
+    const createUserService = container.resolve(CreateUserService);
 
     const user = await createUserService.execute({
       first_name,
@@ -38,7 +39,7 @@ class UsersController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { first_name, last_name, email, password } = request.body;
-    const updateUserService = new UpdateUserServices();
+    const updateUserService = container.resolve(UpdateUserServices);
 
     const user = await updateUserService.execute({
       id: Number(id),
@@ -54,7 +55,7 @@ class UsersController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteUserService = new DeleteUserService();
+    const deleteUserService = container.resolve(DeleteUserService);
 
     await deleteUserService.execute(Number(id));
 

@@ -11,7 +11,7 @@ class UsersRepository implements IUserRepository {
     this.ormRepository = AppDataSource.getRepository(User);
   }
 
-  public async find(): Promise<IUser[] | undefined> {
+  public async find(): Promise<IUser[] | null> {
     return this.ormRepository.find();
   }
 
@@ -20,7 +20,7 @@ class UsersRepository implements IUserRepository {
     return;
   }
 
-  public async update(id: number, data: object): Promise<undefined> {
+  public async update(id: number, data: IUser): Promise<undefined> {
     this.ormRepository.update(id, data);
     return;
   }
