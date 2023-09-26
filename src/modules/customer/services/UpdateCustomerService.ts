@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
-import { ICustomer } from '../domain/models/ICustomer';
 import { inject, injectable } from 'tsyringe';
+import { ICustomer } from '../domain/models/ICustomer';
 import { ICustomerRepository } from '../domain/repositories/ICustomerRepository';
 
 interface IResponse {
@@ -36,7 +36,7 @@ class UpdateCustomerService {
     customerExists.first_name = first_name;
     customerExists.last_name = last_name;
 
-    await this.customerRepository.save(customerExists);
+    await this.customerRepository.update(Number(id), customerExists);
 
     return customerExists;
   }

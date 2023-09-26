@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import Customer from '../infra/typeorm/entities/Customer';
 import { ICustomerRepository } from '../domain/repositories/ICustomerRepository';
+import { ICustomer } from '../domain/models/ICustomer';
 
 @injectable()
 class CustomerListService {
@@ -9,7 +9,7 @@ class CustomerListService {
     private customerRepository: ICustomerRepository
   ) {}
 
-  public async execute(): Promise<Customer[]> {
+  public async execute(): Promise<ICustomer[]> {
     const customers = (await this.customerRepository.find()) || [];
 
     return customers;
