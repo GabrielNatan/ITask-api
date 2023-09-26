@@ -6,7 +6,7 @@ import { IUserCreate } from '@modules/users/domain/models/IUserCreate';
 import { IUser } from '@modules/users/domain/models/IUser';
 
 class UsersRepository implements IUserRepository {
-  private ormRepository: Repository<User>;
+  private ormRepository: Repository<IUser>;
   constructor() {
     this.ormRepository = AppDataSource.getRepository(User);
   }
@@ -30,7 +30,7 @@ class UsersRepository implements IUserRepository {
     return;
   }
 
-  public async findByName(name: string): Promise<User[] | null> {
+  public async findByName(name: string): Promise<IUser[] | null> {
     return this.ormRepository.find({
       where: {
         first_name: name,
@@ -38,12 +38,12 @@ class UsersRepository implements IUserRepository {
     });
   }
 
-  public async findByEmail(email: string): Promise<User | null> {
+  public async findByEmail(email: string): Promise<IUser | null> {
     const user = this.ormRepository.findOne({ where: { email } });
     return user;
   }
 
-  public async findById(id: number): Promise<User | null> {
+  public async findById(id: number): Promise<IUser | null> {
     const user = await this.ormRepository.findOne({ where: { id } });
     return user;
   }
@@ -54,7 +54,7 @@ class UsersRepository implements IUserRepository {
     role,
     email,
     password,
-  }: IUserCreate): Promise<User> {
+  }: IUserCreate): Promise<IUser> {
     const user = this.ormRepository.create({
       email,
       first_name,

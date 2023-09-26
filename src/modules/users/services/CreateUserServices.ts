@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import User from '../infra/typeorm/entities/User';
 import { inject, injectable } from 'tsyringe';
 import { IUserRepository } from '../domain/repositories/IUserRepository';
+import { IUser } from '../domain/models/IUser';
 
 interface IResponse {
   first_name: string;
@@ -22,7 +22,7 @@ class CreateUserService {
     last_name,
     email,
     password,
-  }: IResponse): Promise<User> {
+  }: IResponse): Promise<IUser> {
     const emailExists = await this.usersRepository.findByEmail(email);
 
     if (emailExists) {

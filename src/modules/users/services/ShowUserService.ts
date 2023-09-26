@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import User from '../infra/typeorm/entities/User';
 import { inject, injectable } from 'tsyringe';
 import { IUserRepository } from '../domain/repositories/IUserRepository';
+import { IUser } from '../domain/models/IUser';
 
 interface IRequest {
   id: number;
@@ -14,7 +14,7 @@ class ShowUserService {
     private usersRepository: IUserRepository
   ) {}
 
-  public async execute({ id }: IRequest): Promise<User> {
+  public async execute({ id }: IRequest): Promise<IUser> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
